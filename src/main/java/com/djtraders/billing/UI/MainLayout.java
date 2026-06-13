@@ -29,14 +29,14 @@ public class MainLayout {
     }
 
     public void showProductPage(){
-        ProductUI productUI =
-                new ProductUI(productService, this);
+        DashboardUI.ProductUI productUI =
+                new DashboardUI.ProductUI(productService, this);
         root.setCenter(productUI.getView());
     }
 
     public void showSalesPage(){
-        SalesUI salesUI =
-                new SalesUI(productService,salesService, this);
+        DashboardUI.SalesUI salesUI =
+                new DashboardUI.SalesUI(productService,salesService, this);
         root.setCenter(salesUI.getView());
     }
 }
