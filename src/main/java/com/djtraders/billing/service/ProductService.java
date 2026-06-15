@@ -1,6 +1,7 @@
 package com.djtraders.billing.service;
 
-import com.djtraders.billing.model.Product;
+
+import com.djtraders.billing.model.ProductEntity;
 import com.djtraders.billing.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,11 @@ public class ProductService {
     @Autowired
     private ProductRepository repo;
 
-    public void addProduct(Product p){
+    public void addProduct(ProductEntity p){
         repo.save(p);
     }
 
-    public List<Product> getAll(){
+    public List<ProductEntity> getAll(){
         return repo.findAll();
     }
 

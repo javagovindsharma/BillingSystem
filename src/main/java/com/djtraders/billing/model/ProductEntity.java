@@ -1,27 +1,39 @@
 package com.djtraders.billing.model;
 
-public class Item {
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "products")
+public class ProductEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private int sn;
+
+    @Column(nullable = false)
     private String name;
+
     private String hsn;
+
     private double mrp;
+
     private double qty;
+
     private double rate;
+
     private double discount;
+
     private double amount;
 
-    public Item() {
-    }
-
-    public Item(int sn,
-                   String name,
-                   String hsn,
-                   double mrp,
-                   double qty,
-                   double rate,
-                   double discount) {
-
+    public ProductEntity(int sn,
+                         String name,
+                         String hsn,
+                         double mrp,
+                         double qty,
+                         double rate,
+                         double discount) {
         this.sn = sn;
         this.name = name;
         this.hsn = hsn;
@@ -29,18 +41,15 @@ public class Item {
         this.qty = qty;
         this.rate = rate;
         this.discount = discount;
-
-        // auto calculate amount
-        this.amount = calculateAmount();
     }
 
-    private double calculateAmount() {
-        double total = qty * rate;
-        double discountAmt = total * discount / 100;
-        return total - discountAmt;
+    public Long getId() {
+        return id;
     }
 
-    // Getters & Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public int getSn() {
         return sn;

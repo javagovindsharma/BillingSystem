@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.djtraders.billing.controller.DashboardController">
+    <left>
+        <VBox fx:id="sidebar"
+              prefWidth="90"
+              styleClass="sidebar">
+
+            <Button fx:id="btnDashboard"
+                    text="⌂ Home"
+                    styleClass="side-btn"/>
+
+            <Button fx:id="btnInvoice"
+                    text="📄 Product"
+                    styleClass="side-btn"/>
+
+            <Button fx:id="btnCustomer"
+                    text="👥 Customer"
+                    styleClass="side-btn"/>
+
+            <Button fx:id="btnReport"
+                    text="📈 Report"
+                    styleClass="side-btn"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Button fx:id="btnProfile"
+                    text="👤 Profile"
+                    styleClass="profile-btn"/>
+
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="20" styleClass="main-container">
+
+            <HBox alignment="CENTER_LEFT">
+                <Label text="Bill  Invoice"
+                       styleClass="title"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Button text="New Invoice"  onAction="#handleNewInvoice" styleClass="new-btn"/>
+            </HBox>
+
+            <HBox spacing="20">
+
+                <VBox styleClass="card">
+                    <Label text="Paid Invoice"/>
+                    <Label text="2420"/>
+                </VBox>
+
+                <VBox styleClass="card">
+                    <Label text="Pending Invoice"/>
+                    <Label text="1140"/>
+                </VBox>
+
+                <VBox styleClass="card">
+                    <Label text="Failed Invoice"/>
+                    <Label text="420"/>
+                </VBox>
+
+            </HBox>
+            <HBox spacing="20">
+
+                <VBox styleClass="card">
+                    <Label text="Paid Invoice"/>
+                    <Label text="2420"/>
+                </VBox>
+
+                <VBox styleClass="card">
+                    <Label text="Pending Invoice"/>
+                    <Label text="1140"/>
+                </VBox>
+
+                <VBox styleClass="card">
+                    <Label text="Failed Invoice"/>
+                    <Label text="420"/>
+                </VBox>
+
+            </HBox>
+            <HBox spacing="10" VBox.vgrow="ALWAYS">
+                <VBox styleClass="table-card">
+                    <Label text="Invoices"
+                           style="-fx-font-size:18px;
+                      -fx-font-weight:bold;" />
+                    <HBox spacing="14">
+                        <TextField fx:id="txtSearch" promptText="Search Invoice..." />
+
+                        <Region HBox.hgrow="ALWAYS"/>
+
+                        <Button text="Filters"  onAction="#handleFilter"/>
+                        <Button text="Export"/>
+                    </HBox>
+
+                    <TableView fx:id="invoiceTable">
+                        <columns>
+                            <TableColumn fx:id="colInvoiceId" text="Invoice ID"  prefWidth="120"/>
+                            <TableColumn fx:id="colCompany" text="Company"/>
+                            <TableColumn fx:id="colEmail"   text="Email"/>
+                            <TableColumn fx:id="colStatus"  text="Status"/>
+                            <TableColumn fx:id="colAmount" text="Amount"/>
+                            <TableColumn fx:id="colAction" text="Action"  prefWidth="120"/>
+                        </columns>
+                    </TableView>
+
+                </VBox>
+                <VBox styleClass="table-card">
+                    <Label text="Product"
+                           style="-fx-font-size:18px;
+                      -fx-font-weight:bold;" />
+                    <HBox spacing="10">
+                        <TextField fx:id="txtSearch1" promptText="Search Invoice..." />
+
+                        <Region HBox.hgrow="ALWAYS"/>
+
+                        <Button text="Filters"/>
+                        <Button text="Export"/>
+                    </HBox>
+
+                    <TableView fx:id="productTable">
+                        <columns>
+                            <TableColumn fx:id="colProdId" text="Product ID"/>
+                            <TableColumn fx:id="colpropdName" text="Product Name"/>
+                            <TableColumn fx:id="colProdRate"   text="Rate"/>
+                            <TableColumn fx:id="colProdHSN"  text="HSN"/>
+                            <TableColumn fx:id="colProdAction" text="Action" prefWidth="180"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

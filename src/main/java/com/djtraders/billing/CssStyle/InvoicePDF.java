@@ -1,20 +1,17 @@
 package com.djtraders.billing.CssStyle;
 
-import com.djtraders.billing.model.Item;
+import com.djtraders.billing.UI.ProductUI;
+import com.djtraders.billing.model.Invoice;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.*;
 
 import java.awt.*;
 import java.io.FileOutputStream;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class InvoicePDF {
 
-    public static void generate(String sel,String buy,List<Item> items) {
+    public  void generate(Invoice invoice) {
 
         try {
             Document doc = new Document(PageSize.A4, 10, 10, 10, 10);
@@ -38,11 +35,11 @@ public class InvoicePDF {
             main.addCell(title);
 
             /* ================= HEADER (SELLER / BUYER) ================= */
-            PdfPCell seller = new PdfPCell(new Phrase(sel, normal));
+            PdfPCell seller = new PdfPCell(new Phrase(invoice.getSellerDetails(), normal));
             seller.setColspan(4);
             seller.setPadding(8);
 
-            PdfPCell buyer = new PdfPCell(new Phrase(buy, normal));
+            PdfPCell buyer = new PdfPCell(new Phrase(invoice.getBuyerDetails(), normal));
             buyer.setColspan(4);
             buyer.setPadding(8);
 
@@ -53,11 +50,11 @@ public class InvoicePDF {
             main.addCell(makeCell("Mob: "));
             main.addCell(makeCell("9161490408 "));
              main.addCell(makeCell(" Inv No:"));
-            PdfPCell invoiceCell=new PdfPCell(new Phrase("CH1000"));
+            PdfPCell invoiceCell=new PdfPCell(new Phrase(invoice.getInvoiceNo()));
             invoiceCell.setColspan(2);
             main.addCell(invoiceCell);
             main.addCell(makeCell("Date:"));
-            PdfPCell dateCell=new PdfPCell(new Phrase("13-06-2026"));
+            PdfPCell dateCell=new PdfPCell(new Phrase(invoice.getInvoiceDate().toString()));
             dateCell.setColspan(2);
             main.addCell(dateCell);
             /* ====================Black Row create============================*/
@@ -81,7 +78,7 @@ public class InvoicePDF {
             double totalAmt = 0;
             int i = 1;
 
-            for (Item p : items) {
+            for (ProductUI p : invoice.getProducts()) {
 
                 main.addCell(makeCell1(String.valueOf(i++)));
                 main.addCell(makeCellLong(p.getName()));
@@ -106,7 +103,7 @@ public class InvoicePDF {
             PdfPCell blank2 = new PdfPCell(new Phrase("AMOUNT"));
             blank2.setColspan(2);
 
-            PdfPCell tamt = new PdfPCell(new Phrase(String.valueOf(totalAmt)));
+            PdfPCell tamt = new PdfPCell(new Phrase(String.format("%.2f%%",totalAmt)));
             tamt.setColspan(2);
 
             main.addCell(blank);
@@ -115,7 +112,7 @@ public class InvoicePDF {
             main.addCell(tamt);
 
             /* ================= GRAND TOTAL ================= */
-            PdfPCell grand = new PdfPCell(new Phrase("GRAND TOTAL: " + totalAmt, bold));
+            PdfPCell grand = new PdfPCell(new Phrase("GRAND TOTAL: " + String.format("%.2f%%",totalAmt), bold));
             grand.setColspan(8);
             grand.setBackgroundColor(Color.lightGray);
             grand.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -182,10 +179,10 @@ public class InvoicePDF {
         return cell;
     }
 
-    public static void printPdf(){
-        List<Item> products = new ArrayList<>();
+   /* public static void printPdf(){
+        List<ProductEntity> products = new ArrayList<>();
 
-        products.add(new Item(
+        products.add(new ProductEntity(
                 1,
                 "ZEEBA SUPER BASMATI RICE",
                 "10063092",
@@ -195,7 +192,7 @@ public class InvoicePDF {
                 0
         ));
 
-        products.add(new Item(
+        products.add(new ProductEntity(
                 2,
                 "ZEEBA XXXL BIRYANI BASMATI RICE",
                 "10063092",
@@ -205,7 +202,7 @@ public class InvoicePDF {
                 0
         ));
 
-        products.add(new Item(
+        products.add(new ProductEntity(
                 3,
                 "ZEEBA TIBAR BASMATI RICE",
                 "10064000",
@@ -224,6 +221,6 @@ public class InvoicePDF {
     }
     public static void main(String[] args) {
         printPdf();
-    }
+    }*/
 
 }

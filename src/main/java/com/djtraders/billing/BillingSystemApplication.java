@@ -1,5 +1,6 @@
 package com.djtraders.billing;
 
+import com.djtraders.billing.UI.DashboardUI;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -10,8 +11,8 @@ public class BillingSystemApplication {
         ConfigurableApplicationContext context =
                 SpringApplication.run(BillingSystemApplication.class, args);
 
-        StoreFxApp.setContext(context);
-        javafx.application.Application.launch(StoreFxApp.class, args);
+        DashboardUI.setContext(context);
+        javafx.application.Application.launch(DashboardUI.class, args);
     }
 
 }
