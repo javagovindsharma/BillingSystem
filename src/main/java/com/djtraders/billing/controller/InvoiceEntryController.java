@@ -1,7 +1,7 @@
 package com.djtraders.billing.controller;
 
 import com.djtraders.billing.CssStyle.InvoicePDF;
-import com.djtraders.billing.UI.ProductUI;
+import com.djtraders.billing.UI.ItemUI;
 import com.djtraders.billing.model.Invoice;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
@@ -12,6 +12,8 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.DoubleStringConverter;
 
 import java.util.ArrayList;
+
+import static com.djtraders.billing.CssStyle.AppStyle.showMessage;
 
 public class InvoiceEntryController {
 
@@ -53,36 +55,36 @@ public class InvoiceEntryController {
     private TextArea buyerDetailsField;
 
     @FXML
-    private TableView<ProductUI> productTable;
+    private TableView<ItemUI> productTable;
 
     @FXML
-    private TableColumn<ProductUI, Integer> snCol;
+    private TableColumn<ItemUI, Integer> snCol;
 
     @FXML
-    private TableColumn<ProductUI, String> nameCol;
+    private TableColumn<ItemUI, String> nameCol;
 
     @FXML
-    private TableColumn<ProductUI, String> hsnCol;
+    private TableColumn<ItemUI, String> hsnCol;
 
     @FXML
-    private TableColumn<ProductUI, Double> mrpCol;
+    private TableColumn<ItemUI, Double> mrpCol;
 
     @FXML
-    private TableColumn<ProductUI, Double> qtyCol;
+    private TableColumn<ItemUI, Double> qtyCol;
 
     @FXML
-    private TableColumn<ProductUI, Double> rateCol;
+    private TableColumn<ItemUI, Double> rateCol;
 
     @FXML
-    private TableColumn<ProductUI, Double> discountCol;
+    private TableColumn<ItemUI, Double> discountCol;
 
     @FXML
-    private TableColumn<ProductUI, Double> amountCol;
+    private TableColumn<ItemUI, Double> amountCol;
 
-    private final ObservableList<ProductUI> products =
+    private final ObservableList<ItemUI> products =
             FXCollections.observableArrayList();
     @FXML
-    private TableColumn<ProductUI, Void> actionCol;
+    private TableColumn<ItemUI, Void> actionCol;
     @FXML
     private Label grandTotalLabel;
 
@@ -128,7 +130,7 @@ public class InvoiceEntryController {
 
         try {
 
-            ProductUI product = new ProductUI();
+            ItemUI product = new ItemUI();
 
             product.setSn(products.size() + 1);
 
@@ -205,7 +207,7 @@ public class InvoiceEntryController {
 
                 deleteBtn.setOnAction(event -> {
 
-                    ProductUI product =
+                    ItemUI product =
                             getTableView()
                                     .getItems()
                                     .get(getIndex());
@@ -233,7 +235,7 @@ public class InvoiceEntryController {
         });
     }
 
-    private void calculateAmount(ProductUI product) {
+    private void calculateAmount(ItemUI product) {
 
         double gross =
                 product.getQty() * product.getRate();
@@ -250,7 +252,7 @@ public class InvoiceEntryController {
     private void calculateGrandTotal() {
 
         double total = products.stream()
-                .mapToDouble(ProductUI::getAmount)
+                .mapToDouble(ItemUI::getAmount)
                 .sum();
 
         grandTotalLabel.setText(
@@ -319,23 +321,12 @@ public class InvoiceEntryController {
                 new ArrayList<>(products));
 
         double total = products.stream()
-                .mapToDouble(ProductUI::getAmount)
+                .mapToDouble(ItemUI::getAmount)
                 .sum();
 
         invoice.setGrandTotal(total);
 
         return invoice;
     }
-    private void showMessage(String title,
-                             String message,
-                             Alert.AlertType type) {
 
-        Alert alert = new Alert(type);
-
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-
-        alert.showAndWait();
-    }
 }

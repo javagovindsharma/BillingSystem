@@ -1,0 +1,95 @@
+.root {
+    -fx-background-color: #F4F6F9;
+    -fx-font-family: "Segoe UI";
+}
+
+/* Main Card */
+.form-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 25;
+    -fx-spacing: 15;
+    -fx-effect: dropshadow(
+            gaussian,
+            rgba(0,0,0,0.15),
+            15,
+            0,
+            0,
+            3);
+}
+
+/* Heading */
+.heading {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E3A5F;
+}
+
+/* Labels */
+.label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495E;
+}
+
+/* Text Fields */
+.text-field {
+    -fx-pref-height: 38;
+    -fx-font-size: 13px;
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #D6DBDF;
+    -fx-border-width: 1;
+}
+
+.text-field:focused {
+    -fx-border-color: #1E3A5F;
+    -fx-border-width: 2;
+}
+
+/* Save Button */
+.success-btn {
+    -fx-background-color: #27AE60;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+
+.success-btn:hover {
+    -fx-background-color: #229954;
+}
+
+/* Clear Button */
+.primary-btn {
+    -fx-background-color: #1E3A5F;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+
+.primary-btn:hover {
+    -fx-background-color: #294A73;
+}
+
+/* GridPane Styling */
+.grid-pane {
+    -fx-padding: 10 0 10 0;
+}
+
+/* Button Hover Animation Feel */
+.button {
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+.button:hover {
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}

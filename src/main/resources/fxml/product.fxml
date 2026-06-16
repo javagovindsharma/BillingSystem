@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.djtraders.billing.controller.ProductController"
+      stylesheets="@../css/product.css"
+      styleClass="form-card">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="PRODUCT MASTER"
+           styleClass="heading"/>
+
+    <GridPane hgap="15" vgap="12">
+
+        <Label text="Product Name"
+               GridPane.rowIndex="0"
+               GridPane.columnIndex="0"/>
+
+        <TextField fx:id="productNameField"
+                   promptText="Enter Product Name"
+                   GridPane.rowIndex="0"
+                   GridPane.columnIndex="1"/>
+
+        <Label text="HSN Code"
+               GridPane.rowIndex="1"
+               GridPane.columnIndex="0"/>
+
+        <TextField fx:id="hsnField"
+                   promptText="HSN Code"
+                   GridPane.rowIndex="1"
+                   GridPane.columnIndex="1"/>
+
+        <Label text="Rate"
+               GridPane.rowIndex="2"
+               GridPane.columnIndex="0"/>
+
+        <TextField fx:id="rateField"
+                   promptText="Rate"
+                   GridPane.rowIndex="2"
+                   GridPane.columnIndex="1"/>
+
+        <Label text="MRP"
+               GridPane.rowIndex="3"
+               GridPane.columnIndex="0"/>
+
+        <TextField fx:id="mrpField"
+                   promptText="MRP"
+                   GridPane.rowIndex="3"
+                   GridPane.columnIndex="1"/>
+
+        <Label text="Discount %"
+               GridPane.rowIndex="4"
+               GridPane.columnIndex="0"/>
+
+        <TextField fx:id="discountField"
+                   promptText="Discount Percentage"
+                   GridPane.rowIndex="4"
+                   GridPane.columnIndex="1"/>
+
+    </GridPane>
+
+    <HBox spacing="10"
+          alignment="CENTER_RIGHT">
+
+        <Button text="Save Product"
+                onAction="#saveProduct"
+                styleClass="success-btn"/>
+
+        <Button text="Cancel"
+                onAction="#clearForm"
+                styleClass="primary-btn"/>
+
+    </HBox>
+
+</VBox>

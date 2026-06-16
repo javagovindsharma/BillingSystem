@@ -49,8 +49,15 @@
 
                 <VBox HBox.hgrow="ALWAYS">
                     <Label text="Seller Details"/>
-                    <TextArea fx:id="sellerDetailsField"
-                              prefRowCount="4"/>
+                    <TextArea fx:id="sellerDetailsField" prefRowCount="4">
+                        <text>
+                            R.J. TRADERS&#10;
+                            DILDAR NAGAR BAZAR NEAR KRISHI MANDI GHAZIPUR&#10;
+                            Mob. 9161490408&#10;
+                            GST. 09AYMPJ1555D2ZE
+                        </text>
+                    </TextArea>
+
                 </VBox>
 
                 <VBox HBox.hgrow="ALWAYS">

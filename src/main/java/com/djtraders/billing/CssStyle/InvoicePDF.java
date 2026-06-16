@@ -1,6 +1,6 @@
 package com.djtraders.billing.CssStyle;
 
-import com.djtraders.billing.UI.ProductUI;
+import com.djtraders.billing.UI.ItemUI;
 import com.djtraders.billing.model.Invoice;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
@@ -78,7 +78,7 @@ public class InvoicePDF {
             double totalAmt = 0;
             int i = 1;
 
-            for (ProductUI p : invoice.getProducts()) {
+            for (ItemUI p : invoice.getProducts()) {
 
                 main.addCell(makeCell1(String.valueOf(i++)));
                 main.addCell(makeCellLong(p.getName()));

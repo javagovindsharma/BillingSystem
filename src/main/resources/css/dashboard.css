@@ -93,3 +93,9 @@
 .delete-btn .glyph-icon{
     -fx-fill:white;
 }
+.table-view .column-header .label {
+    -fx-alignment: CENTER;
+}
+.table-column {
+    -fx-alignment: CENTER;
+}

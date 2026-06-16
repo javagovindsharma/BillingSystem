@@ -1,60 +1,57 @@
 package com.djtraders.billing.UI;
 
-import javafx.beans.property.*;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 public class ProductUI {
 
-    private final IntegerProperty sn =
-            new SimpleIntegerProperty();
 
-    private final StringProperty name =
-            new SimpleStringProperty("");
+    private final SimpleLongProperty productId;
+    private final SimpleStringProperty productName;
+    private final SimpleStringProperty hsn;
 
-    private final StringProperty hsn =
-            new SimpleStringProperty("");
+    private final SimpleIntegerProperty rate;
+    private final SimpleDoubleProperty mrp;
+    private final SimpleIntegerProperty discount;
 
-    private final DoubleProperty mrp =
-            new SimpleDoubleProperty();
-
-    private final DoubleProperty qty =
-            new SimpleDoubleProperty();
-
-    private final DoubleProperty rate =
-            new SimpleDoubleProperty();
-
-    private final DoubleProperty discount =
-            new SimpleDoubleProperty();
-
-    private final DoubleProperty amount =
-            new SimpleDoubleProperty();
-
-    // SN
-    public int getSn() {
-        return sn.get();
+    public ProductUI() {
+        this.productId=new SimpleLongProperty();
+        this.productName = new SimpleStringProperty();
+        this.hsn = new SimpleStringProperty();
+        this.rate = new SimpleIntegerProperty();
+        this.mrp = new SimpleDoubleProperty();
+        this.discount = new SimpleIntegerProperty();
     }
 
-    public void setSn(int sn) {
-        this.sn.set(sn);
+    public ProductUI(Long productId,String productName,
+                     String hsn,
+                     Integer rate,
+                     double mrp,
+                     Integer discount) {
+        this.productId =
+                new SimpleLongProperty(productId);
+        this.productName =
+                new SimpleStringProperty(productName);
+
+        this.hsn = new SimpleStringProperty(hsn);
+
+        this.rate = new SimpleIntegerProperty(rate);
+
+        this.mrp = new SimpleDoubleProperty(mrp);
+
+        this.discount = new SimpleIntegerProperty(discount);
     }
 
-    public IntegerProperty snProperty() {
-        return sn;
+    public String getProductName() {
+        return productName.get();
     }
 
-    // Name
-    public String getName() {
-        return name.get();
+    public void setProductName(String productName) {
+        this.productName.set(productName);
     }
 
-    public void setName(String name) {
-        this.name.set(name);
-    }
-
-    public StringProperty nameProperty() {
-        return name;
-    }
-
-    // HSN
     public String getHsn() {
         return hsn.get();
     }
@@ -63,11 +60,14 @@ public class ProductUI {
         this.hsn.set(hsn);
     }
 
-    public StringProperty hsnProperty() {
-        return hsn;
+    public double getRate() {
+        return rate.get();
     }
 
-    // MRP
+    public void setRate(Integer rate) {
+        this.rate.set(rate);
+    }
+
     public double getMrp() {
         return mrp.get();
     }
@@ -76,59 +76,19 @@ public class ProductUI {
         this.mrp.set(mrp);
     }
 
-    public DoubleProperty mrpProperty() {
-        return mrp;
-    }
-
-    // Quantity
-    public double getQty() {
-        return qty.get();
-    }
-
-    public void setQty(double qty) {
-        this.qty.set(qty);
-    }
-
-    public DoubleProperty qtyProperty() {
-        return qty;
-    }
-
-    // Rate
-    public double getRate() {
-        return rate.get();
-    }
-
-    public void setRate(double rate) {
-        this.rate.set(rate);
-    }
-
-    public DoubleProperty rateProperty() {
-        return rate;
-    }
-
-    // Discount
     public double getDiscount() {
         return discount.get();
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(Integer discount) {
         this.discount.set(discount);
     }
 
-    public DoubleProperty discountProperty() {
-        return discount;
+    public Long getProductId() {
+        return productId.get();
     }
 
-    // Amount
-    public double getAmount() {
-        return amount.get();
-    }
-
-    public void setAmount(double amount) {
-        this.amount.set(amount);
-    }
-
-    public DoubleProperty amountProperty() {
-        return amount;
+    public void setProductId(Long productId) {
+        this.productId.set(productId);
     }
 }

@@ -1,6 +1,6 @@
 package com.djtraders.billing.model;
 
-import com.djtraders.billing.UI.ProductUI;
+import com.djtraders.billing.UI.ItemUI;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,7 +13,7 @@ public class Invoice {
     private String sellerDetails;
     private String buyerDetails;
 
-    private List<ProductUI> products;
+    private List<ItemUI> products;
 
     private double grandTotal;
 
@@ -49,11 +49,11 @@ public class Invoice {
         this.buyerDetails = buyerDetails;
     }
 
-    public List<ProductUI> getProducts() {
+    public List<ItemUI> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductUI> products) {
+    public void setProducts(List<ItemUI> products) {
         this.products = products;
     }
 

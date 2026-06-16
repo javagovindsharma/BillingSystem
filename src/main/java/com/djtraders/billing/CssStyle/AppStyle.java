@@ -1,5 +1,7 @@
 package com.djtraders.billing.CssStyle;
 
+import javafx.scene.control.Alert;
+
 public class AppStyle {
     public static String buttonStyle() {
         return """
@@ -128,5 +130,18 @@ public class AppStyle {
             -fx-border-color:#E5E7EB;
             -fx-padding:5;
             """;
+    }
+
+    public  static void showMessage(String title,
+                             String message,
+                             Alert.AlertType type) {
+
+        Alert alert = new Alert(type);
+
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        alert.showAndWait();
     }
 }

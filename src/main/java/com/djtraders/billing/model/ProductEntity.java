@@ -3,47 +3,9 @@ package com.djtraders.billing.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 public class ProductEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private int sn;
-
-    @Column(nullable = false)
-    private String name;
-
-    private String hsn;
-
-    private double mrp;
-
-    private double qty;
-
-    private double rate;
-
-    private double discount;
-
-    private double amount;
-
-    public ProductEntity(int sn,
-                         String name,
-                         String hsn,
-                         double mrp,
-                         double qty,
-                         double rate,
-                         double discount) {
-        this.sn = sn;
-        this.name = name;
-        this.hsn = hsn;
-        this.mrp = mrp;
-        this.qty = qty;
-        this.rate = rate;
-        this.discount = discount;
-    }
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -51,13 +13,15 @@ public class ProductEntity {
         this.id = id;
     }
 
-    public int getSn() {
-        return sn;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public void setSn(int sn) {
-        this.sn = sn;
-    }
+    private String name;
+    private String hsn;
+    private Integer rate;
+    private double mrp;
+    private Integer discount;
 
     public String getName() {
         return name;
@@ -75,6 +39,14 @@ public class ProductEntity {
         this.hsn = hsn;
     }
 
+    public Integer getRate() {
+        return rate;
+    }
+
+    public void setRate(Integer rate) {
+        this.rate = rate;
+    }
+
     public double getMrp() {
         return mrp;
     }
@@ -83,35 +55,19 @@ public class ProductEntity {
         this.mrp = mrp;
     }
 
-    public double getQty() {
-        return qty;
-    }
-
-    public void setQty(double qty) {
-        this.qty = qty;
-    }
-
-    public double getRate() {
-        return rate;
-    }
-
-    public void setRate(double rate) {
-        this.rate = rate;
-    }
-
-    public double getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 
-    public double getAmount() {
-        return amount;
-    }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
+
+
+
+
+
+
 }

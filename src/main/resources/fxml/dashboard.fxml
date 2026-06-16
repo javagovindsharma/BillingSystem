@@ -38,13 +38,15 @@
     <center>
         <VBox spacing="20" styleClass="main-container">
 
-            <HBox alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" spacing="15">
                 <Label text="Bill  Invoice"
                        styleClass="title"/>
 
                 <Region HBox.hgrow="ALWAYS"/>
 
                 <Button text="New Invoice"  onAction="#handleNewInvoice" styleClass="new-btn"/>
+                <Button text="Create Product"  onAction="#handleNewProduct" styleClass="new-btn"/>
+
             </HBox>
 
             <HBox spacing="20">
@@ -99,9 +101,9 @@
 
                     <TableView fx:id="invoiceTable">
                         <columns>
-                            <TableColumn fx:id="colInvoiceId" text="Invoice ID"  prefWidth="120"/>
+                            <TableColumn fx:id="colInvoiceId" text="Invoice ID"  prefWidth="90"/>
                             <TableColumn fx:id="colCompany" text="Company"/>
-                            <TableColumn fx:id="colEmail"   text="Email"/>
+                            <TableColumn fx:id="colEmail"   text="Email" prefWidth="180"/>
                             <TableColumn fx:id="colStatus"  text="Status"/>
                             <TableColumn fx:id="colAmount" text="Amount"/>
                             <TableColumn fx:id="colAction" text="Action"  prefWidth="120"/>
@@ -114,7 +116,7 @@
                            style="-fx-font-size:18px;
                       -fx-font-weight:bold;" />
                     <HBox spacing="10">
-                        <TextField fx:id="txtSearch1" promptText="Search Invoice..." />
+                        <TextField fx:id="txtProdSearch" promptText="Search Invoice..." />
 
                         <Region HBox.hgrow="ALWAYS"/>
 
@@ -124,11 +126,13 @@
 
                     <TableView fx:id="productTable">
                         <columns>
-                            <TableColumn fx:id="colProdId" text="Product ID"/>
-                            <TableColumn fx:id="colpropdName" text="Product Name"/>
-                            <TableColumn fx:id="colProdRate"   text="Rate"/>
+                            <TableColumn fx:id="colProdId" text="Id" prefWidth="80" />
+                            <TableColumn fx:id="colpropdName" text="Name" prefWidth="180"/>
                             <TableColumn fx:id="colProdHSN"  text="HSN"/>
-                            <TableColumn fx:id="colProdAction" text="Action" prefWidth="180"/>
+                            <TableColumn fx:id="colProdRate"   text="Rate"/>
+                            <TableColumn fx:id="colProdMrp"   text="MRP"/>
+                            <TableColumn fx:id="colProdDiscount"   text="Discount"/>
+                            <TableColumn fx:id="colProdAction" text="Action" prefWidth="150"/>
                         </columns>
                     </TableView>
                 </VBox>
