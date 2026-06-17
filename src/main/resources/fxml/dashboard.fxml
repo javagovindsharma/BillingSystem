@@ -49,42 +49,69 @@
 
             </HBox>
 
-            <HBox spacing="20">
+            <HBox spacing="30">
 
-                <VBox styleClass="card">
-                    <Label text="Paid Invoice"/>
-                    <Label text="2420"/>
+                <!-- Left Side Cards -->
+                <VBox spacing="20">
+
+                    <HBox spacing="20">
+
+                        <VBox styleClass="card">
+                            <Label text="Paid Invoice"/>
+                            <Label text="2420"/>
+                        </VBox>
+
+                        <VBox styleClass="card">
+                            <Label text="Pending Invoice"/>
+                            <Label text="1140"/>
+                        </VBox>
+
+                        <VBox styleClass="card">
+                            <Label text="Failed Invoice"/>
+                            <Label text="420"/>
+                        </VBox>
+
+                    </HBox>
+
+                    <HBox spacing="20">
+
+                        <VBox styleClass="card">
+                            <Label text="Total Products"/>
+                            <Label text="150"/>
+                        </VBox>
+
+                        <VBox styleClass="card">
+                            <Label text="Customers"/>
+                            <Label text="85"/>
+                        </VBox>
+
+                        <VBox styleClass="card">
+                            <Label text="Stock Alerts"/>
+                            <Label text="12"/>
+                        </VBox>
+
+                    </HBox>
+
                 </VBox>
 
-                <VBox styleClass="card">
-                    <Label text="Pending Invoice"/>
-                    <Label text="1140"/>
-                </VBox>
+                <!-- Right Side Company Banner -->
+                <VBox styleClass="company-banner"
+                      HBox.hgrow="ALWAYS"
+                      alignment="CENTER_RIGHT">
 
-                <VBox styleClass="card">
-                    <Label text="Failed Invoice"/>
-                    <Label text="420"/>
+                    <Label text="R.J. TRADERS"
+                           styleClass="company-title"/>
+
+                    <Label text="Wholesale  Retail Distribution"
+                           styleClass="company-subtitle"/>
+
+                    <Label text="GST Billing • Inventory Management"
+                           styleClass="company-tagline"/>
+
                 </VBox>
 
             </HBox>
-            <HBox spacing="20">
 
-                <VBox styleClass="card">
-                    <Label text="Paid Invoice"/>
-                    <Label text="2420"/>
-                </VBox>
-
-                <VBox styleClass="card">
-                    <Label text="Pending Invoice"/>
-                    <Label text="1140"/>
-                </VBox>
-
-                <VBox styleClass="card">
-                    <Label text="Failed Invoice"/>
-                    <Label text="420"/>
-                </VBox>
-
-            </HBox>
             <HBox spacing="10" VBox.vgrow="ALWAYS">
                 <VBox styleClass="table-card">
                     <Label text="Invoices"

@@ -16,7 +16,8 @@ public class InvoicePDF {
 
         try {
             Document doc = new Document(PageSize.A4, 10, 10, 10, 10);
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("invoice.pdf"));
+            String downloadPath = System.getProperty("user.home") + "\\Downloads";
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(downloadPath+"invoice.pdf"));
             doc.open();
 
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);

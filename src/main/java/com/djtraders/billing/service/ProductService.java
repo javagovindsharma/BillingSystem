@@ -54,6 +54,10 @@ public class ProductService {
         }
         return listProduct;
     }
+    public List<ProductEntity>  findAllProduct(){
+        return productRepository.findAll();
+    }
+
 
     public List<InvoiceUI> getAllInvoice(){
        List<InvoiceEntity> listOfInvoiceEntity= invoiceRepository.findAll();

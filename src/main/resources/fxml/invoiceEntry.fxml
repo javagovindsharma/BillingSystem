@@ -78,10 +78,10 @@
                                GridPane.rowIndex="0"
                                GridPane.columnIndex="0"/>
 
-                        <TextField fx:id="productNameField"
-                                   promptText="Enter Product Name"
-                                   GridPane.rowIndex="0"
-                                   GridPane.columnIndex="1"/>
+                        <ComboBox fx:id="productComboBox"
+                                  promptText="Select Product"
+                                  GridPane.rowIndex="0"
+                                  GridPane.columnIndex="1"/>
 
                         <Label text="HSN"
                                GridPane.rowIndex="0"
@@ -220,6 +220,10 @@
                 <Button text="Save Invoice"
                         onAction="#saveInvoice"
                         styleClass="success-btn"/>
+
+                <Button text="close"
+                        onAction="#closeInvoice"
+                        styleClass="cancel-btn"/>
 
             </HBox>
 

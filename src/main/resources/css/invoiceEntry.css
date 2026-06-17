@@ -71,6 +71,23 @@
 .success-btn:hover {
     -fx-background-color: #219150;
 }
+.cancel-btn {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 18;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.cancel-btn:hover {
+    -fx-background-color: #c82333;
+}
+
+.cancel-btn:pressed {
+    -fx-background-color: #a71d2a;
+}
 
 /* Amount Field */
 .amount-field {
@@ -133,4 +150,63 @@
 
 .table-column-left {
     -fx-alignment: CENTER-LEFT;
+}
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #d0d7de;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-size: 14px;
+    -fx-pref-height: 38;
+}
+
+.combo-box:hover {
+    -fx-border-color: #4a90e2;
+}
+
+.combo-box:focused {
+    -fx-border-color: #2196f3;
+    -fx-border-width: 2;
+    -fx-background-insets: 0;
+}
+
+/* Selected value area */
+.combo-box .list-cell {
+    -fx-padding: 6 10 6 10;
+    -fx-font-size: 14px;
+}
+
+/* Arrow button */
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0 6 6 0;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #555555;
+}
+
+/* Dropdown popup */
+.combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #d0d7de;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.combo-box-popup .list-cell {
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+}
+
+.combo-box-popup .list-cell:hover {
+     -fx-background-color: #0d47a1;
+     -fx-text-fill: white;
+}
+
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
 }

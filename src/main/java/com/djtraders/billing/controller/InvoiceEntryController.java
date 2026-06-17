@@ -4,12 +4,15 @@ import com.djtraders.billing.CssStyle.InvoicePDF;
 import com.djtraders.billing.UI.ItemUI;
 import com.djtraders.billing.model.InvoiceEntity;
 import com.djtraders.billing.model.ItemEntity;
+import com.djtraders.billing.model.ProductEntity;
 import com.djtraders.billing.service.ProductService;
 import jakarta.annotation.PostConstruct;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -33,7 +36,7 @@ public class InvoiceEntryController {
      *  grid
      */
     @FXML
-    private TextField productNameField;
+    private ComboBox<ProductEntity> productComboBox;
 
     @FXML
     private TextField hsnField;
@@ -98,8 +101,47 @@ public class InvoiceEntryController {
     private TableColumn<ItemUI, Void> actionCol;
     @FXML
     private Label grandTotalLabel;
+    List<ProductEntity> listProducts;
 
+    public void initializeProduct() {
 
+         listProducts =  productService.findAllProduct();
+
+        productComboBox.getItems().addAll(listProducts);
+        productComboBox.setConverter(
+                new StringConverter<>() {
+
+                    @Override
+                    public String toString(ProductEntity product) {
+                        return product == null ? "" : product.getName();
+                    }
+
+                    @Override
+                    public ProductEntity fromString(String string) {
+                        return null;
+                    }
+                });
+
+        productComboBox.setOnAction(event -> {
+
+            ProductEntity product =
+                    productComboBox.getValue();
+
+            if(product != null){
+
+                hsnField.setText(product.getHsn());
+
+                mrpField.setText(
+                        String.valueOf(product.getMrp()));
+
+                rateField.setText(
+                        String.valueOf(product.getRate()));
+
+                discountField.setText(
+                        String.valueOf(product.getDiscount()));
+            }
+        });
+    }
     public InvoiceEntryController(){
         System.out.println("product service"+productService);
 
@@ -139,7 +181,7 @@ public class InvoiceEntryController {
     }
     @FXML
     public void initialize() {
-
+        initializeProduct();
         initializeColumns();
 
         productTable.setItems(items);
@@ -156,7 +198,7 @@ public class InvoiceEntryController {
 
             product.setSn(items.size() + 1);
 
-            product.setName(productNameField.getText().trim());
+           product.setName(productComboBox.getValue().getName());
 
             product.setHsn(hsnField.getText().trim());
 
@@ -203,17 +245,25 @@ public class InvoiceEntryController {
     @FXML
     private void clearProductFields() {
 
-        productNameField.clear();
+        productComboBox.getItems().addAll(listProducts);
         hsnField.clear();
         mrpField.clear();
         qtyField.clear();
         rateField.clear();
         discountField.clear();
 
-        productNameField.requestFocus();
+        productComboBox.requestFocus();
         productTable.setColumnResizePolicy(
                 TableView.CONSTRAINED_RESIZE_POLICY);
     }
+    @FXML
+    private void closeInvoice() {
+        Stage stage =
+                (Stage) discountField.getScene().getWindow();
+
+        stage.close();
+    }
+
 
    private void addDeleteButtonColumn() {
 
