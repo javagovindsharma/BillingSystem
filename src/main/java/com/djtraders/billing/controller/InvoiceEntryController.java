@@ -2,22 +2,33 @@ package com.djtraders.billing.controller;
 
 import com.djtraders.billing.CssStyle.InvoicePDF;
 import com.djtraders.billing.UI.ItemUI;
-import com.djtraders.billing.model.Invoice;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import com.djtraders.billing.model.InvoiceEntity;
+import com.djtraders.billing.model.ItemEntity;
+import com.djtraders.billing.service.ProductService;
+import jakarta.annotation.PostConstruct;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.converter.DoubleStringConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.djtraders.billing.CssStyle.AppStyle.showMessage;
-
+@Controller
 public class InvoiceEntryController {
 
-
+    private static ApplicationContext context;
+    public static void setContext(ApplicationContext ctx){
+        context = ctx;
+    }
+    @Autowired
+    private ProductService productService;
     /**
      *  grid
      */
@@ -81,13 +92,24 @@ public class InvoiceEntryController {
     @FXML
     private TableColumn<ItemUI, Double> amountCol;
 
-    private final ObservableList<ItemUI> products =
+    private final ObservableList<ItemUI> items =
             FXCollections.observableArrayList();
     @FXML
     private TableColumn<ItemUI, Void> actionCol;
     @FXML
     private Label grandTotalLabel;
 
+
+    public InvoiceEntryController(){
+        System.out.println("product service"+productService);
+
+    }
+    @PostConstruct
+    public void setup(){
+      //  long id=productService.findNoOfRows()+1;
+        //this.invoiceNoField.setText("CH" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))+ String.format("%03d", id));
+       // this.invoiceDatePicker.setValue(LocalDate.now());
+    }
 
     private void initializeColumns() {
 
@@ -120,7 +142,7 @@ public class InvoiceEntryController {
 
         initializeColumns();
 
-        productTable.setItems(products);
+        productTable.setItems(items);
 
         addDeleteButtonColumn();
     }
@@ -132,7 +154,7 @@ public class InvoiceEntryController {
 
             ItemUI product = new ItemUI();
 
-            product.setSn(products.size() + 1);
+            product.setSn(items.size() + 1);
 
             product.setName(productNameField.getText().trim());
 
@@ -159,7 +181,7 @@ public class InvoiceEntryController {
             product.setAmount(gross - discountAmt);
 
             // TABLE ME ADD
-            products.add(product);
+            items.add(product);
 
             calculateGrandTotal();
 
@@ -212,7 +234,7 @@ public class InvoiceEntryController {
                                     .getItems()
                                     .get(getIndex());
 
-                    products.remove(product);
+                    items.remove(product);
 
                     refreshSerialNumbers();
 
@@ -251,7 +273,7 @@ public class InvoiceEntryController {
 
     private void calculateGrandTotal() {
 
-        double total = products.stream()
+        double total = items.stream()
                 .mapToDouble(ItemUI::getAmount)
                 .sum();
 
@@ -261,38 +283,20 @@ public class InvoiceEntryController {
 
     private void refreshSerialNumbers() {
 
-        for (int i = 0; i < products.size(); i++) {
-            products.get(i).setSn(i + 1);
+        for (int i = 0; i < items.size(); i++) {
+            items.get(i).setSn(i + 1);
         }
     }
 
     @FXML
     private void saveInvoice() {
-
-        Invoice invoice = prepareInvoice();
-
-        System.out.println("Invoice No : "
-                + invoice.getInvoiceNo());
-
-        System.out.println("Date : "
-                + invoice.getInvoiceDate());
-
-        System.out.println("Seller : "
-                + invoice.getSellerDetails());
-
-        System.out.println("Buyer : "
-                + invoice.getBuyerDetails());
-
-        System.out.println("Total Products : "
-                + invoice.getProducts().size());
-
-        System.out.println("Grand Total : "
-                + invoice.getGrandTotal());
+        productService.saveInvoice(prepareInvoice());
+        System.out.println("Invoice Saved in DB");
     }
 
     @FXML
     private void generatePdf() {
-        Invoice invoice = prepareInvoice();
+        InvoiceEntity invoice = prepareInvoice();
         InvoicePDF inoicePrint=new InvoicePDF();
         inoicePrint.generate(invoice);
         showMessage(
@@ -301,26 +305,25 @@ public class InvoiceEntryController {
                 Alert.AlertType.INFORMATION);
         System.out.println("Generate PDF");
     }
-    private Invoice prepareInvoice() {
+    private InvoiceEntity prepareInvoice() {
 
-        Invoice invoice = new Invoice();
+        InvoiceEntity invoice = new InvoiceEntity();
 
-        invoice.setInvoiceNo(
-                invoiceNoField.getText());
+        invoice.setInvoiceNo(invoiceNoField.getText());
 
-        invoice.setInvoiceDate(
-                invoiceDatePicker.getValue());
+        invoice.setInvoiceDate(invoiceDatePicker.getValue());
 
-        invoice.setSellerDetails(
-                sellerDetailsField.getText());
+        invoice.setSellerAddress(sellerDetailsField.getText());
 
-        invoice.setBuyerDetails(
-                buyerDetailsField.getText());
+        invoice.setBuyerAddress(buyerDetailsField.getText());
 
-        invoice.setProducts(
-                new ArrayList<>(products));
+        List<ItemEntity> itemMapperEntities =
+                items.stream()
+                        .map(ItemMapper::toEntity)
+                        .toList();
+        invoice.setListOfItems(itemMapperEntities);
 
-        double total = products.stream()
+        double total = items.stream()
                 .mapToDouble(ItemUI::getAmount)
                 .sum();
 
@@ -329,4 +332,10 @@ public class InvoiceEntryController {
         return invoice;
     }
 
+}
+final class ItemMapper {
+
+    public static ItemEntity toEntity(ItemUI ui) {
+        return new ItemEntity(ui.getSn(),ui.getName(),ui.getHsn(),ui.getMrp(), ui.getQty(), ui.getRate(), ui.getDiscount(),ui.getRate()*ui.getQty());
+    }
 }

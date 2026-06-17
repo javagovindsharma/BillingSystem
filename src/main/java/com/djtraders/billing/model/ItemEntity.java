@@ -26,14 +26,16 @@ public class ItemEntity {
     private double discount;
 
     private double amount;
-
+    public ItemEntity() {
+        // Hibernate ke liye
+    }
     public ItemEntity(int sn,
                          String name,
                          String hsn,
                          double mrp,
                          double qty,
                          double rate,
-                         double discount) {
+                         double discount,double amount) {
         this.sn = sn;
         this.name = name;
         this.hsn = hsn;
@@ -41,6 +43,7 @@ public class ItemEntity {
         this.qty = qty;
         this.rate = rate;
         this.discount = discount;
+        this.amount= amount;
     }
 
     public Long getId() {

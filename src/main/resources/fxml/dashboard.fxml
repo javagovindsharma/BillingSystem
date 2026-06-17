@@ -101,10 +101,10 @@
 
                     <TableView fx:id="invoiceTable">
                         <columns>
-                            <TableColumn fx:id="colInvoiceId" text="Invoice ID"  prefWidth="90"/>
-                            <TableColumn fx:id="colCompany" text="Company"/>
-                            <TableColumn fx:id="colEmail"   text="Email" prefWidth="180"/>
-                            <TableColumn fx:id="colStatus"  text="Status"/>
+                            <TableColumn fx:id="colInvoiceId" text="Invoice No"  prefWidth="90"/>
+                            <TableColumn fx:id="colSeller" text="Seller" prefWidth="220"/>
+                            <TableColumn fx:id="colBuyer"   text="Buyer" prefWidth="220"/>
+                            <TableColumn fx:id="colDate"  text="Date"/>
                             <TableColumn fx:id="colAmount" text="Amount"/>
                             <TableColumn fx:id="colAction" text="Action"  prefWidth="120"/>
                         </columns>
@@ -120,7 +120,7 @@
 
                         <Region HBox.hgrow="ALWAYS"/>
 
-                        <Button text="Filters"/>
+                        <Button text="Filters" onAction="#handleProductFilter"/>
                         <Button text="Export"/>
                     </HBox>
 

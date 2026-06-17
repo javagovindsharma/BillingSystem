@@ -1,45 +1,74 @@
 package com.djtraders.billing.UI;
 
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InvoiceUI {
 
-    private final SimpleStringProperty invoiceId;
-    private final SimpleStringProperty companyName;
-    private final SimpleStringProperty email;
-    private final SimpleStringProperty status;
-    private final SimpleDoubleProperty amount;
+    private final SimpleStringProperty invoiceNo = new SimpleStringProperty();
+    private final SimpleStringProperty sellerAddress = new SimpleStringProperty();
+    private final SimpleStringProperty buyerAddress = new SimpleStringProperty();
+    private final SimpleStringProperty grandTotal = new SimpleStringProperty();
+    private final SimpleObjectProperty<LocalDate> invoiceDate =
+            new SimpleObjectProperty<>();
 
-    public InvoiceUI(String invoiceId, String companyName,
-                   String email, String status, double amount) {
-        this.invoiceId = new SimpleStringProperty(invoiceId);
-        this.companyName = new SimpleStringProperty(companyName);
-        this.email = new SimpleStringProperty(email);
-        this.status = new SimpleStringProperty(status);
-        this.amount = new SimpleDoubleProperty(amount);
+    private List<ItemUI> listOfItems = new ArrayList<>();
+
+    // Invoice No
+    public String getInvoiceNo() {
+        return invoiceNo.get();
     }
 
-    public String getInvoiceId() { return invoiceId.get(); }
-    public String getCompanyName() { return companyName.get(); }
-    public String getEmail() { return email.get(); }
-    public String getStatus() { return status.get(); }
-    public double getAmount() { return amount.get(); }
-
-    // Setters
-    public void setCompanyName(String companyName) {
-        this.companyName.set(companyName);
+    public void setInvoiceNo(String invoiceNo) {
+        this.invoiceNo.set(invoiceNo);
     }
 
-    public void setEmail(String email) {
-        this.email.set(email);
+    // Seller Address
+    public String getSellerAddress() {
+        return sellerAddress.get();
     }
 
-    public void setStatus(String status) {
-        this.status.set(status);
+    public void setSellerAddress(String sellerAddress) {
+        this.sellerAddress.set(sellerAddress);
     }
 
-    public void setAmount(double amount) {
-        this.amount.set(amount);
+    // Buyer Address
+    public String getBuyerAddress() {
+        return buyerAddress.get();
+    }
+
+    public void setBuyerAddress(String buyerAddress) {
+        this.buyerAddress.set(buyerAddress);
+    }
+
+    // Invoice Date
+    public LocalDate getInvoiceDate() {
+        return invoiceDate.get();
+    }
+
+    public void setInvoiceDate(LocalDate invoiceDate) {
+        this.invoiceDate.set(invoiceDate);
+    }
+
+    // Item List
+    public List<ItemUI> getListOfItems() {
+        return listOfItems;
+    }
+
+    public void setListOfItems(List<ItemUI> listOfItems) {
+        this.listOfItems = listOfItems;
+    }
+
+    // Buyer Address
+    public String getGrandTotal() {
+        return grandTotal.get();
+    }
+
+    public void setGrandTotal(String grandTotal) {
+        this.grandTotal.set(grandTotal);
     }
 }

@@ -1,7 +1,8 @@
 package com.djtraders.billing.CssStyle;
 
 import com.djtraders.billing.UI.ItemUI;
-import com.djtraders.billing.model.Invoice;
+import com.djtraders.billing.model.InvoiceEntity;
+import com.djtraders.billing.model.ItemEntity;
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.pdf.*;
@@ -11,7 +12,7 @@ import java.io.FileOutputStream;
 
 public class InvoicePDF {
 
-    public  void generate(Invoice invoice) {
+    public  void generate(InvoiceEntity invoice) {
 
         try {
             Document doc = new Document(PageSize.A4, 10, 10, 10, 10);
@@ -35,11 +36,11 @@ public class InvoicePDF {
             main.addCell(title);
 
             /* ================= HEADER (SELLER / BUYER) ================= */
-            PdfPCell seller = new PdfPCell(new Phrase(invoice.getSellerDetails(), normal));
+            PdfPCell seller = new PdfPCell(new Phrase(invoice.getSellerAddress(), normal));
             seller.setColspan(4);
             seller.setPadding(8);
 
-            PdfPCell buyer = new PdfPCell(new Phrase(invoice.getBuyerDetails(), normal));
+            PdfPCell buyer = new PdfPCell(new Phrase(invoice.getBuyerAddress(), normal));
             buyer.setColspan(4);
             buyer.setPadding(8);
 
@@ -78,7 +79,7 @@ public class InvoicePDF {
             double totalAmt = 0;
             int i = 1;
 
-            for (ItemUI p : invoice.getProducts()) {
+            for (ItemEntity p : invoice.getListOfItems()) {
 
                 main.addCell(makeCell1(String.valueOf(i++)));
                 main.addCell(makeCellLong(p.getName()));
@@ -178,49 +179,4 @@ public class InvoicePDF {
 
         return cell;
     }
-
-   /* public static void printPdf(){
-        List<ProductEntity> products = new ArrayList<>();
-
-        products.add(new ProductEntity(
-                1,
-                "ZEEBA SUPER BASMATI RICE",
-                "10063092",
-                0,
-                810,
-                99,
-                0
-        ));
-
-        products.add(new ProductEntity(
-                2,
-                "ZEEBA XXXL BIRYANI BASMATI RICE",
-                "10063092",
-                0,
-                300,
-                103,
-                0
-        ));
-
-        products.add(new ProductEntity(
-                3,
-                "ZEEBA TIBAR BASMATI RICE",
-                "10064000",
-                0,
-                450,
-                81,
-                0
-        ));
-
-        // CALL PDF GENERATOR
-        String sel= "R.J. TRADERS\nDILDAR NAGAR BAZAR\nMob: 9161490408\nGST: 09AYMPJ1555D2ZE";
-        String buy= "LAXMAN RAM AND COMPANY\nMAHAJAN TOLI\nMob: 7355682305\nGST: 09CBXPK8650G2ZV";
-        //generate(products);
-
-        System.out.println("Invoice Generated Successfully!");
-    }
-    public static void main(String[] args) {
-        printPdf();
-    }*/
-
 }

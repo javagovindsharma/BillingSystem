@@ -3,8 +3,6 @@ package com.djtraders.billing.controller;
 import com.djtraders.billing.UI.DashboardUI;
 import com.djtraders.billing.UI.InvoiceUI;
 import com.djtraders.billing.UI.ProductUI;
-import com.djtraders.billing.model.ProductEntity;
-import com.djtraders.billing.repository.ProductRepository;
 import com.djtraders.billing.service.ProductService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,13 +39,13 @@ public class DashboardController {
     private TableColumn<InvoiceUI, String> colInvoiceId;
 
     @FXML
-    private TableColumn<InvoiceUI, String> colCompany;
+    private TableColumn<InvoiceUI, String> colSeller;
 
     @FXML
-    private TableColumn<InvoiceUI, String> colEmail;
+    private TableColumn<InvoiceUI, String> colBuyer;
 
     @FXML
-    private TableColumn<InvoiceUI, String> colStatus;
+    private TableColumn<InvoiceUI, String> colDate;
 
     @FXML
     private TableColumn<InvoiceUI, Double> colAmount;
@@ -65,7 +63,7 @@ public class DashboardController {
     @FXML
     private TextField txtProdSearch;
     ObservableList<ProductUI> masterProductData = FXCollections.observableArrayList();
-    FilteredList<ProductUI> filteredproductData;
+    FilteredList<ProductUI> filteredProductData;
 
 
     /**
@@ -146,8 +144,8 @@ public class DashboardController {
     }
     private void editInvoice(InvoiceUI invoice)  {
 
-        System.out.println("Editing : "
-                + invoice.getInvoiceId());
+        System.out.println("editInvoice : "
+                + invoice.getInvoiceNo());
         try {
             // Open Edit Dialog
             FXMLLoader loader = new FXMLLoader(
@@ -180,7 +178,7 @@ public class DashboardController {
         alert.setHeaderText(null);
         alert.setContentText(
                 "Delete invoice " +
-                        invoice.getInvoiceId() + "?");
+                        invoice.getInvoiceNo() + "?");
 
         Optional<ButtonType> result =
                 alert.showAndWait();
@@ -203,9 +201,9 @@ public class DashboardController {
                 return true;
             }
 
-            return invoice.getCompanyName().toLowerCase().contains(keyword)
-                    || invoice.getInvoiceId().toLowerCase().contains(keyword)
-                    || invoice.getEmail().toLowerCase().contains(keyword);
+            return invoice.getBuyerAddress().toLowerCase().contains(keyword)
+                    || invoice.getInvoiceNo().toLowerCase().contains(keyword)
+                    || invoice.getSellerAddress().toLowerCase().contains(keyword);
         });
 
         invoiceTable.refresh();
@@ -222,7 +220,8 @@ public class DashboardController {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/invoiceEntry.fxml"));
 
-
+            // ⭐ THIS IS THE MISSING LINE
+            loader.setControllerFactory(DashboardUI.getContext()::getBean);
             Parent root = loader.load();
 
             InvoiceEntryController controller =
@@ -250,14 +249,11 @@ public class DashboardController {
             Parent root = loader.load();
             ProductController controller =
                     loader.getController();
-
-
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.showAndWait();
             productTable.refresh();
-            List<ProductUI>  proL= productService.getAll();
+            List<ProductUI>  proL= productService.getAllProduct();
             List<ProductUI> listProduct=new LinkedList<>();
             listProduct.addAll(proL);
 
@@ -272,42 +268,24 @@ public class DashboardController {
         }
     }
 
-    private void invoiceInitialization(){
+    private void invoiceUiToFxmlSetup(){
         colInvoiceId.setCellValueFactory(
-                new PropertyValueFactory<>("invoiceId"));
+                new PropertyValueFactory<>("invoiceNo"));
 
-        colCompany.setCellValueFactory(
-                new PropertyValueFactory<>("companyName"));
+        colSeller.setCellValueFactory(
+                new PropertyValueFactory<>("sellerAddress"));
 
-        colEmail.setCellValueFactory(
-                new PropertyValueFactory<>("email"));
+        colBuyer.setCellValueFactory(
+                new PropertyValueFactory<>("buyerAddress"));
 
-        colStatus.setCellValueFactory(
-                new PropertyValueFactory<>("status"));
+        colDate.setCellValueFactory(
+                new PropertyValueFactory<>("invoiceDate"));
 
         colAmount.setCellValueFactory(
-                new PropertyValueFactory<>("amount"));
-        List<InvoiceUI> listInvoice=new LinkedList<>();
-        int i=1;
-        while(i<50) {
-            listInvoice.add(new InvoiceUI("INV00"+i++,
-                    "Spotify",
-                    "finance@spotify.com",
-                    "Pending",
-                    14000));
+                new PropertyValueFactory<>("grandTotal"));
+    }
 
-            listInvoice.add(new InvoiceUI("INV00"+i++,
-                    "Slack",
-                    "support@slack.com",
-                    "Success",
-                    25000));
-
-            listInvoice.add(new InvoiceUI("INV00"+i++,
-                    "Figma",
-                    "support@figma.com",
-                    "Failed",
-                    12000));
-        }
+    private void filterDataSetup(List<InvoiceUI> listInvoice){
         ObservableList<InvoiceUI> data =
                 FXCollections.observableArrayList(listInvoice);
 
@@ -328,9 +306,9 @@ public class DashboardController {
 
                 String keyword = newVal.toLowerCase();
 
-                return invoice.getCompanyName().toLowerCase().contains(keyword)
-                        || invoice.getInvoiceId().toLowerCase().contains(keyword)
-                        || invoice.getEmail().toLowerCase().contains(keyword);
+                return invoice.getBuyerAddress().toLowerCase().contains(keyword)
+                        || invoice.getInvoiceNo().toLowerCase().contains(keyword)
+                        || invoice.getSellerAddress().toLowerCase().contains(keyword);
             });
         });
 
@@ -339,61 +317,91 @@ public class DashboardController {
 
         invoiceTable.setItems(sortedData);
     }
+    private void invoiceInitialization(){
+        invoiceUiToFxmlSetup();
+        List<InvoiceUI> listInvoice=productService.getAllInvoice();
+        System.out.println("load invoice data"+listInvoice.size());
+        filterDataSetup(listInvoice);
+    }
+
+    private void productUiToSetupFxml(){
+       colProdId.setCellValueFactory(
+               new PropertyValueFactory<>("productId"));
+
+       colpropdName.setCellValueFactory(
+               new PropertyValueFactory<>("productName"));
+
+       colProdHSN.setCellValueFactory(
+               new PropertyValueFactory<>("hsn"));
+
+       colProdRate.setCellValueFactory(
+               new PropertyValueFactory<>("rate"));
+
+       colProdMrp.setCellValueFactory(
+               new PropertyValueFactory<>("mrp"));
+       colProdDiscount.setCellValueFactory(
+               new PropertyValueFactory<>("discount"));
+   }
+
+    private void productFilterDataSetup(List<ProductUI> listProduct){
+       ObservableList<ProductUI> data =FXCollections.observableArrayList(listProduct);
+       productTable.setColumnResizePolicy(
+               TableView.CONSTRAINED_RESIZE_POLICY);
+       productTable.setItems(data);
+       masterProductData.addAll(data);
+       filteredProductData = new FilteredList<>(masterProductData, b -> true);
+
+       txtProdSearch.textProperty().addListener((obs, oldVal, newVal) -> {
+
+           filteredProductData.setPredicate(product -> {
+
+               if (newVal == null || newVal.isBlank()) {
+                   return true;
+               }
+
+               String keyword = newVal.toLowerCase();
+
+               return product.getProductName().toLowerCase().contains(keyword)
+                       || String.valueOf(product.getProductId()).toLowerCase().contains(keyword)
+                       || String.valueOf(product.getRate()).toLowerCase().contains(keyword)
+                       || product.getHsn().toLowerCase().contains(keyword);
+           });
+       });
+
+       SortedList<ProductUI> sortedData = new SortedList<>(filteredProductData);
+       sortedData.comparatorProperty().bind(productTable.comparatorProperty());
+
+       productTable.setItems(sortedData);
+   }
     private void productInitialization(){
-        colProdId.setCellValueFactory(
-                new PropertyValueFactory<>("productId"));
-
-        colpropdName.setCellValueFactory(
-                new PropertyValueFactory<>("productName"));
-
-        colProdHSN.setCellValueFactory(
-                new PropertyValueFactory<>("hsn"));
-
-        colProdRate.setCellValueFactory(
-                new PropertyValueFactory<>("rate"));
-
-        colProdMrp.setCellValueFactory(
-                new PropertyValueFactory<>("mrp"));
-        colProdDiscount.setCellValueFactory(
-                new PropertyValueFactory<>("discount"));
-        List<ProductUI> listProduct=new LinkedList<>();
-        int i=1;
-        List<ProductUI>  proL= productService.getAll();
-
-        listProduct.addAll(proL);
-
-        ObservableList<ProductUI> data =FXCollections.observableArrayList(listProduct);
-
+        productUiToSetupFxml();
+        List<ProductUI> listProduct= productService.getAllProduct();
         addActionProdButtons();
-        productTable.setColumnResizePolicy(
-                TableView.CONSTRAINED_RESIZE_POLICY);
-        productTable.setItems(data);
-        masterProductData.addAll(data);
-        filteredproductData = new FilteredList<>(masterProductData, b -> true);
+        productFilterDataSetup(listProduct);
 
-        txtSearch.textProperty().addListener((obs, oldVal, newVal) -> {
+    }
+    @FXML
+    private void handleProductFilter() {
+        String keyword = txtProdSearch.getText().toLowerCase();
+        System.out.println("keyboard"+keyword);
+        filteredProductData.setPredicate(product -> {
 
-            filteredproductData.setPredicate(product -> {
+            if(keyword.isBlank()) {
+                return true;
+            }
 
-                if (newVal == null || newVal.isBlank()) {
-                    return true;
-                }
-
-                String keyword = newVal.toLowerCase();
-
-                return product.getProductName().toLowerCase().contains(keyword)
-                        || String.valueOf(product.getProductId()).toLowerCase().contains(keyword)
-                        || String.valueOf(product.getRate()).toLowerCase().contains(keyword)
-                        || product.getHsn().toLowerCase().contains(keyword);
-            });
+            return product.getProductName().toLowerCase().contains(keyword)
+                    || String.valueOf(product.getProductId()).toLowerCase().contains(keyword)
+                    || String.valueOf(product.getRate()).toLowerCase().contains(keyword)
+                    || product.getHsn().toLowerCase().contains(keyword);
         });
 
-        SortedList<ProductUI> sortedData = new SortedList<>(filteredproductData);
+        productTable.refresh();
+        SortedList<ProductUI> sortedData = new SortedList<>(filteredProductData);
         sortedData.comparatorProperty().bind(productTable.comparatorProperty());
 
         productTable.setItems(sortedData);
     }
-
     private void addActionProdButtons() {
 
         colProdAction.setCellFactory(param -> new TableCell<>() {
@@ -463,7 +471,7 @@ public class DashboardController {
 
     private void editProduct(ProductUI productUI)  {
 
-        System.out.println("Editing : "
+        System.out.println("editProduct  : "
                 + productUI.getProductId());
         try {
             // Open Edit Dialog
@@ -483,7 +491,7 @@ public class DashboardController {
             stage.showAndWait(); // IMPORTANT
 
             productTable.refresh();
-            List<ProductUI>  proL= productService.getAll();
+            List<ProductUI>  proL= productService.getAllProduct();
             List<ProductUI> listProduct=new LinkedList<>();
             listProduct.addAll(proL);
 
